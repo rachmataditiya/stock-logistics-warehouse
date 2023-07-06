@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_form_midtrans" model="ir.ui.view">
+        <field name="name">Midtrans Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position='inside'>
+                <group name="midtrans_credentials" attrs="{'invisible': [('code', '!=', 'midtrans')]}">
+                    <field name="midtrans_merchant_id"
+                           attrs="{'required':[('code', '=', 'midtrans'), ('state', '!=', 'disabled')]}"
+                    />
+                    <field name="midtrans_client_key"
+                           attrs="{'required':[('code', '=', 'midtrans'), ('state', '!=', 'disabled')]}"
+                    />
+                    <field name="midtrans_server_key" password="True"
+                           attrs="{'required':[('code', '=', 'midtrans'), ('state', '!=', 'disabled')]}"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+    <record id="payment_transaction_form" model="ir.ui.view">
+        <field name="name">acquirer.transaction.form.inherit</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="provider_reference"]' position='after'>
+                   <field name="midtrans_payment_ref" readonly="1"
+                          attrs="{'invisible': [('provider_code', '!=', 'midtrans')]}"
+                   />
+                   <field name="midtrans_payment_id" readonly="1"
+                          attrs="{'invisible': [('provider_code', '!=', 'midtrans')]}"
+                   />
+            </xpath>
+        </field>
+    </record>
+</odoo>

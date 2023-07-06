@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_portal_content_inherit_sale_payment" name="Payment Reference Portal" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div t-if="sale_order.transaction_ids and not invoices and sale_order.state in ('sent', 'sale') and not success and not error" t-att-data-order-id="sale_order.id">
+                <div>
+                    <strong>Payment Information</strong>
+                </div>
+                <div>
+                    <t t-foreach="sale_order.transaction_ids" t-as="i">
+                    <t t-esc="i._get_payment_status()" />
+                </t>
+                </div>
+            </div>
+        </xpath>
+  </template>
+
+</odoo>
