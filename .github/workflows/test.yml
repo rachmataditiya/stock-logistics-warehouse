@@ -28,7 +28,7 @@ jobs:
               fi
           done
   test:
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     container: ${{ matrix.container }}
     name: ${{ matrix.name }}
     strategy:
